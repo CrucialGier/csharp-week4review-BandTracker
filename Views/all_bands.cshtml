@@ -1,9 +1,15 @@
 <h2>Band Tracker<h2>
+<h3>Register A New Band<h3>
+<form action="/band/new" method="post">
+  <label for="newBand">Name of Band</label>
+  <input id="newBand" name="newBand">
+  <button type="submit">Register</button>
+</form>
 <h3>All Registered Bands</h3>
 <ul>
 @foreach (var currentBand in @Model)
 {
-  <li><a href="/@currentBand.GetName()">@currentBand.GetName()</a></li>
+  <li><a href="/band/@currentBand.GetId()">@currentBand.GetName()</a></li>
 }
 </ul>
 

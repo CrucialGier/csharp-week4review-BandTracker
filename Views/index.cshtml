@@ -10,7 +10,7 @@
 @foreach (var location in @Model)
 {
   <li>
-    <a href="/@location.GetName()/@location.GetId()">@location.GetName()</a>
+    <a href="/venue/@location.GetId()">@location.GetName()</a>
     <form action="/venue/edit/@location.GetId()" method="post">
       <input type="hidden" name="_method" value="PATCH">
       <input id="newVenueName" name="newVenueName">

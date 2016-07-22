@@ -20,7 +20,7 @@ namespace BandTracker
       };
       Patch["/venue/edit/{id}"] =parameters=> {
         Venue changeVenue = Venue.Find(parameters.id);
-        changeVenue.SetName(Request.Form["newName"]);
+        changeVenue.SetName(Request.Form["newVenueName"]);
         changeVenue.Update();
         List<Venue> AllVenues = Venue.GetAll();
         return View["index.cshtml", AllVenues];
@@ -31,6 +31,12 @@ namespace BandTracker
         return View["index.cshtml", AllVenues];
       };
       Get["/band/all"] =_=> {
+        List<Band> AllBands = Band.GetAll();
+        return View["all_bands.cshtml", AllBands];
+      };
+      Post["/band/new"] =_=> {
+        Band NewBand = new Band(Request.Form["newBand"]);
+        NewBand.Save();
         List<Band> AllBands = Band.GetAll();
         return View["all_bands.cshtml", AllBands];
       };
