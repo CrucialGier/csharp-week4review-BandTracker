@@ -40,6 +40,18 @@ namespace BandTracker
         List<Band> AllBands = Band.GetAll();
         return View["all_bands.cshtml", AllBands];
       };
+      Get["/venue/{id}"] =parameters=> {
+        Venue currentVenue = Venue.Find(parameters.id);
+        return View["venue_bands.cshtml", currentVenue];
+      };
+      Post["/venue/{id}/add-band"] =parameters=> {
+        Band newBand = new Band(Request.Form["newBand"]);
+        newBand.Save();
+        Venue currentVenue = Venue.Find(parameters.id);
+        currentVenue.AddBand(newBand);
+        return View["venue_bands.cshtml", currentVenue];
+      };
+      
     }
   }
 }
