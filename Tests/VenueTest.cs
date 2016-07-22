@@ -43,6 +43,41 @@ namespace BandTracker
       Assert.Equal(testVenue, foundVenue);
     }
 
+    [Fact]
+    public void Test_AddBand_AddsBandToVenue()
+    {
+      Band testBand = new Band("Frets on Fire", 1);
+      testBand.Save();
+      Venue testVenue = new Venue("Shatter Dome", 1);
+      testVenue.Save();
+
+      testVenue.AddBand(testBand);
+
+      List<Band> testList = new List<Band>{testBand};
+      List<Band> result = testVenue.GetBands();
+
+      Assert.Equal(testList, result);
+    }
+
+    [Fact]
+    public void Test_GetBands_ReturnsAllBandBands()
+    {
+      Venue testVenue = new Venue("Shatter Dome", 1);
+      testVenue.Save();
+      Band testBand1 = new Band("Frets on Fire", 1);
+      testBand1.Save();
+      Band testBand2 = new Band("Crimson Typhoon and the Knife Heads", 1);
+      testBand2.Save();
+
+      testVenue.AddBand(testBand1);
+      testVenue.AddBand(testBand2);
+
+      List<Band> testList = new List<Band> {testBand1, testBand2};
+      List<Band> result = testVenue.GetBands();
+
+      Assert.Equal(testList, result);
+    }
+
     public void Dispose()
     {
       Band.DeleteAll();

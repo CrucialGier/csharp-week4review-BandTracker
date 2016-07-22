@@ -124,8 +124,6 @@ namespace BandTracker
 
     public static Venue Find(int Id)
     {
-      Venue foundVenue = null;
-
       SqlConnection conn = DB.Connection();
       conn.Open();
       SqlDataReader rdr;
@@ -138,6 +136,8 @@ namespace BandTracker
 
       cmd.Parameters.Add(courseIdParameter);
       rdr = cmd.ExecuteReader();
+
+      Venue foundVenue = null;
 
       while(rdr.Read())
       {
@@ -156,6 +156,68 @@ namespace BandTracker
         conn.Close();
       }
       return foundVenue;
+    }
+
+    public void AddBand(Band newBand)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("INSERT INTO venues_bands (venue_id, band_id) VALUES (@VenueId, @BandId);", conn);
+
+      SqlParameter venueIdParameter = new SqlParameter();
+      venueIdParameter.ParameterName = "@BandId";
+      venueIdParameter.Value = newBand.GetId();
+
+      SqlParameter bandIdParameter = new SqlParameter();
+      bandIdParameter.ParameterName = "@VenueId";
+      bandIdParameter.Value = this.GetId();
+
+      cmd.Parameters.Add(bandIdParameter);
+      cmd.Parameters.Add(venueIdParameter);
+
+      cmd.ExecuteNonQuery();
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+
+    public List<Band> GetBands()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlDataReader rdr;
+
+      SqlCommand cmd = new SqlCommand("SELECT bands.* FROM bands JOIN venues_bands ON(bands.id = venues_bands.band_id) JOIN venues ON(venues_bands.venue_id = venues.id) WHERE venues.id = @VenueId;", conn);
+
+      SqlParameter venueIdParameter = new SqlParameter();
+      venueIdParameter.ParameterName = "@VenueId";
+      venueIdParameter.Value = this.GetId();
+
+      cmd.Parameters.Add(venueIdParameter);
+      rdr = cmd.ExecuteReader();
+
+      List<Band> allBands = new List<Band> {};
+
+      while (rdr.Read())
+      {
+        int thisBandId = rdr.GetInt32(0);
+        string bandName = rdr.GetString(1);
+        int bandVenueId = rdr.GetInt32(2);
+        Band foundBand = new Band(bandName, bandVenueId, thisBandId);
+        allBands.Add(foundBand);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return allBands;
     }
 
     public static void DeleteAll()

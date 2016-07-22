@@ -24,10 +24,10 @@ namespace BandTracker
     public void Test_Save_SavesToDatabase()
     {
       Band testBand = new Band("Frets on Fire", 0);
-
       testBand.Save();
-      List<Band> result = Band.GetAll();
+
       List<Band> testList = new List<Band>{testBand};
+      List<Band> result = Band.GetAll();
 
       Assert.Equal(testList, result);
     }
@@ -41,6 +41,41 @@ namespace BandTracker
       Band foundBand = Band.Find(testBand.GetId());
 
       Assert.Equal(testBand, foundBand);
+    }
+
+    [Fact]
+    public void Test_AddVenue_AddsVenueToBand()
+    {
+      Band testBand = new Band("Frets on Fire", 1);
+      testBand.Save();
+      Venue testVenue = new Venue("Shatter Dome", 1);
+      testVenue.Save();
+
+      testBand.AddVenue(testVenue);
+
+      List<Venue> testList = new List<Venue>{testVenue};
+      List<Venue> result = testBand.GetVenues();
+
+      Assert.Equal(testList, result);
+    }
+
+    [Fact]
+    public void Test_GetVenues_ReturnsAllBandVenues()
+    {
+      Band testBand = new Band("Frets on Fire", 1);
+      testBand.Save();
+      Venue testVenue1 = new Venue("Shatter Dome", 1);
+      testVenue1.Save();
+      Venue testVenue2 = new Venue("Belly of the Beast", 1);
+      testVenue2.Save();
+
+      testBand.AddVenue(testVenue1);
+      testBand.AddVenue(testVenue2);
+
+      List<Venue> testList = new List<Venue> {testVenue1, testVenue2};
+      List<Venue> result = testBand.GetVenues();
+
+      Assert.Equal(testList, result);
     }
 
     public void Dispose()
