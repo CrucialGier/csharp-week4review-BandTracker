@@ -122,6 +122,42 @@ namespace BandTracker
       return AllVenues;
     }
 
+    public static Venue Find(int Id)
+    {
+      Venue foundVenue = null;
+
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlDataReader rdr;
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM venues WHERE id = @VenueId;", conn);
+
+      SqlParameter courseIdParameter = new SqlParameter();
+      courseIdParameter.ParameterName = "@VenueId";
+      courseIdParameter.Value = Id.ToString();
+
+      cmd.Parameters.Add(courseIdParameter);
+      rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        int foundId = rdr.GetInt32(0);
+        string foundName = rdr.GetString(1);
+        int foundBandId = rdr.GetInt32(2);
+        foundVenue = new Venue(foundName, foundBandId, foundId);
+      }
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return foundVenue;
+    }
+
     public static void DeleteAll()
     {
       SqlConnection conn = DB.Connection();

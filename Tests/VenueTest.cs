@@ -23,13 +23,24 @@ namespace BandTracker
     [Fact]
     public void Test_Save_SavesToDatabase()
     {
-      Band testBand = new Band("Frets on Fire", 0);
+      Venue testVenue = new Venue("Shatter Dome", 0);
 
-      testBand.Save();
-      List<Band> result = Band.GetAll();
-      List<Band> testList = new List<Band>{testBand};
+      testVenue.Save();
+      List<Venue> result = Venue.GetAll();
+      List<Venue> testList = new List<Venue>{testVenue};
 
       Assert.Equal(testList, result);
+    }
+
+    [Fact]
+    public void Test_Find_FindsVenueInDatabase()
+    {
+      Venue testVenue = new Venue("Shatter Dome", 0);
+      testVenue.Save();
+
+      Venue foundVenue = Venue.Find(testVenue.GetId());
+
+      Assert.Equal(testVenue, foundVenue);
     }
 
     public void Dispose()

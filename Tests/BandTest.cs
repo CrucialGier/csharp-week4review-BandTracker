@@ -32,6 +32,17 @@ namespace BandTracker
       Assert.Equal(testList, result);
     }
 
+    [Fact]
+    public void Test_Find_FindsBandInDatabase()
+    {
+      Band testBand = new Band("Frets on Fire", 0);
+      testBand.Save();
+
+      Band foundBand = Band.Find(testBand.GetId());
+
+      Assert.Equal(testBand, foundBand);
+    }
+
     public void Dispose()
     {
       Band.DeleteAll();
