@@ -44,7 +44,7 @@ namespace BandTracker
         Venue currentVenue = Venue.Find(parameters.id);
         return View["venue_bands.cshtml", currentVenue];
       };
-      Post["/venue/{id}/add-band"] =parameters=> {
+      Post["/venue/{id}/add-band/new"] =parameters=> {
         Band newBand = new Band(Request.Form["newBand"]);
         newBand.Save();
         Venue currentVenue = Venue.Find(parameters.id);
@@ -55,7 +55,7 @@ namespace BandTracker
         Band currentBand = Band.Find(parameters.id);
         return View["band_venues.cshtml", currentBand];
       };
-      Post["/band/{id}/add-venue"] =parameters=> {
+      Post["/band/{id}/add-venue/new"] =parameters=> {
         Venue newVenue = new Venue(Request.Form["newVenue"]);
         newVenue.Save();
         Band currentBand = Band.Find(parameters.id);

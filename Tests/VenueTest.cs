@@ -46,7 +46,7 @@ namespace BandTracker
     [Fact]
     public void Test_AddBand_AddsBandToVenue()
     {
-      Band testBand = new Band("Frets on Fire", 1);
+      Band testBand = new Band("Frets on Fire");
       testBand.Save();
       Venue testVenue = new Venue("Shatter Dome");
       testVenue.Save();
@@ -64,9 +64,9 @@ namespace BandTracker
     {
       Venue testVenue = new Venue("Shatter Dome");
       testVenue.Save();
-      Band testBand1 = new Band("Frets on Fire", 1);
+      Band testBand1 = new Band("Frets on Fire");
       testBand1.Save();
-      Band testBand2 = new Band("Crimson Typhoon and the Knife Heads", 1);
+      Band testBand2 = new Band("Crimson Typhoon and the Knife Heads");
       testBand2.Save();
 
       testVenue.AddBand(testBand1);
@@ -81,7 +81,7 @@ namespace BandTracker
     [Fact]
     public void Test_Update_UpdatesVenueWithNewValues()
     {
-      Venue testVenue = new Venue("Shatter Dome", 1);
+      Venue testVenue = new Venue("Shatter Dome");
       testVenue.Save();
 
       testVenue.SetName("Belly of the Beast");

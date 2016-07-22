@@ -1,11 +1,12 @@
 <h2>@Model.GetName()<h2>
-<h3>Register a new Venue "@Model.GetName()" is Playing at<h3>
-<form action="/band/@Model.GetId()/add-venue" method="post">
+<h4>Register a new Venue "@Model.GetName()" is Playing at</h4>
+<form action="/band/@Model.GetId()/add-venue/new" method="post">
   <label for="newVenue">Name of Venue</label>
   <input id="newVenue" name="newVenue">
   <button type="submit">Register</button>
 </form>
-<h3>All Venues @Model.GetName() is Playing</h3>
+<a href="/band/@Model.GetId()/add-venue">Add an existing Venue to "@Model.GetName()"</a>
+<h3>All Venues "@Model.GetName()" is Playing</h3>
 <ul>
 @foreach (var currentVenue in @Model.GetVenues())
 {

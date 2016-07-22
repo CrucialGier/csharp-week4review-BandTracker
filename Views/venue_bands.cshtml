@@ -1,6 +1,6 @@
 <h2>@Model.GetName()<h2>
-<h3>Register a new Band to play at @Model.GetName()<h3>
-<form action="/venue/@Model.GetId()/add-band" method="post">
+<h4>Register a new Band to play at "@Model.GetName()"</h4>
+<form action="/venue/@Model.GetId()/add-band/new" method="post">
   <label for="newBand">Name of Band</label>
   <input id="newBand" name="newBand">
   <button type="submit">Register</button>
