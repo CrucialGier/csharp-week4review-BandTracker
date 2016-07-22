@@ -23,7 +23,7 @@ namespace BandTracker
     [Fact]
     public void Test_Save_SavesToDatabase()
     {
-      Venue testVenue = new Venue("Shatter Dome", 0);
+      Venue testVenue = new Venue("Shatter Dome");
 
       testVenue.Save();
       List<Venue> result = Venue.GetAll();
@@ -35,7 +35,7 @@ namespace BandTracker
     [Fact]
     public void Test_Find_FindsVenueInDatabase()
     {
-      Venue testVenue = new Venue("Shatter Dome", 0);
+      Venue testVenue = new Venue("Shatter Dome");
       testVenue.Save();
 
       Venue foundVenue = Venue.Find(testVenue.GetId());
@@ -48,7 +48,7 @@ namespace BandTracker
     {
       Band testBand = new Band("Frets on Fire", 1);
       testBand.Save();
-      Venue testVenue = new Venue("Shatter Dome", 1);
+      Venue testVenue = new Venue("Shatter Dome");
       testVenue.Save();
 
       testVenue.AddBand(testBand);
@@ -62,7 +62,7 @@ namespace BandTracker
     [Fact]
     public void Test_GetBands_ReturnsAllBandBands()
     {
-      Venue testVenue = new Venue("Shatter Dome", 1);
+      Venue testVenue = new Venue("Shatter Dome");
       testVenue.Save();
       Band testBand1 = new Band("Frets on Fire", 1);
       testBand1.Save();
@@ -85,11 +85,10 @@ namespace BandTracker
       testVenue.Save();
 
       testVenue.SetName("Belly of the Beast");
-      testVenue.SetBandId(2);
       testVenue.Update();
 
       Venue resultVenue = Venue.Find(testVenue.GetId());
-      Venue test = new Venue("Belly of the Beast", 2, testVenue.GetId());
+      Venue test = new Venue("Belly of the Beast", testVenue.GetId());
 
       Assert.Equal(test, resultVenue);
     }
@@ -97,9 +96,9 @@ namespace BandTracker
     [Fact]
     public void Test_Delete_DeletesVenueFromDatabase()
     {
-      Venue testVenue1 = new Venue("Shatter Dome", 1);
+      Venue testVenue1 = new Venue("Shatter Dome");
       testVenue1.Save();
-      Venue testVenue2 = new Venue("Belly of the Beast", 2);
+      Venue testVenue2 = new Venue("Belly of the Beast");
       testVenue2.Save();
 
       Venue.Delete(testVenue1.GetId());

@@ -1,0 +1,27 @@
+<h2>Band Tracker<h2>
+<h3>Register A New Venue<h3>
+<form action="/venue/new" method="post">
+  <label for="newVenue">Name of Venue</label>
+  <input id="newVenue" name="newVenue">
+  <button type="submit">Register</button>
+</form>
+<h3>All Registered Venues</h3>
+<ul>
+@foreach (var location in @Model)
+{
+  <li>
+    <a href="/@location.GetName()/@location.GetId()">@location.GetName()</a>
+    <form action="/venue/edit/@location.GetId()" method="post">
+      <input type="hidden" name="_method" value="PATCH">
+      <input id="newVenueName" name="newVenueName">
+      <button type="submit">Change Name</button>
+    </form>
+    <form action="/venue/delete/@location.GetId()" method="post">
+      <input type="hidden" name="_method" value="DELETE">
+      <button type="submit">Delete Venue</button>
+    </form>
+  </li>
+}
+</ul>
+
+<a href="/band/all">Browse All Bands</a>

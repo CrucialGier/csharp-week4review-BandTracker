@@ -9,13 +9,11 @@ namespace BandTracker
   {
     private int _id;
     private string _name;
-    private int _venueId;
 
-    public Band(string Name, int VenueId, int Id = 0)
+    public Band(string Name, int Id = 0)
     {
       _id = Id;
       _name = Name;
-      _venueId = VenueId;
     }
 
     public int GetId()
@@ -32,15 +30,6 @@ namespace BandTracker
       _name = Name;
     }
 
-    public int GetVenueId()
-    {
-      return _venueId;
-    }
-    public void SetVenueId(int VenueId)
-    {
-      _venueId = VenueId;
-    }
-
     public override bool Equals(System.Object otherBand)
     {
       if (!(otherBand is Band))
@@ -52,8 +41,7 @@ namespace BandTracker
         Band newBand = (Band) otherBand;
         bool idEquality = this.GetId() == newBand.GetId();
         bool nameEquality = this.GetName() == newBand.GetName();
-        bool venueIdEquality = this.GetVenueId() == newBand.GetVenueId();
-        return (idEquality && nameEquality && venueIdEquality);
+        return (idEquality && nameEquality);
       }
     }
 
@@ -63,18 +51,13 @@ namespace BandTracker
       conn.Open();
       SqlDataReader rdr;
 
-      SqlCommand cmd = new SqlCommand("INSERT INTO bands (name, venue_id) OUTPUT INSERTED.id VALUES (@BandName, @BandVenueId);", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO bands (name) OUTPUT INSERTED.id VALUES (@BandName);", conn);
 
       SqlParameter bandNameParameter = new SqlParameter();
       bandNameParameter.ParameterName = "@BandName";
       bandNameParameter.Value = this.GetName();
 
-      SqlParameter bandVenueIdParameter = new SqlParameter();
-      bandVenueIdParameter.ParameterName = "@BandVenueId";
-      bandVenueIdParameter.Value = this.GetVenueId();
-
       cmd.Parameters.Add(bandNameParameter);
-      cmd.Parameters.Add(bandVenueIdParameter);
 
       rdr = cmd.ExecuteReader();
 
@@ -107,8 +90,7 @@ namespace BandTracker
       {
         int bandId = rdr.GetInt32(0);
         string bandName = rdr.GetString(1);
-        int bandVenueId = rdr.GetInt32(2);
-        Band newBand = new Band(bandName, bandVenueId, bandId);
+        Band newBand = new Band(bandName, bandId);
         AllBands.Add(newBand);
       }
       if (rdr != null)
@@ -143,8 +125,7 @@ namespace BandTracker
       {
         int foundId = rdr.GetInt32(0);
         string foundName = rdr.GetString(1);
-        int foundVenueId = rdr.GetInt32(2);
-        foundBand = new Band(foundName, foundVenueId, foundId);
+        foundBand = new Band(foundName, foundId);
       }
 
       if (rdr != null)
@@ -205,8 +186,7 @@ namespace BandTracker
       {
         int thisVenueId = rdr.GetInt32(0);
         string venueName = rdr.GetString(1);
-        int venueBandId = rdr.GetInt32(2);
-        Venue foundVenue = new Venue(venueName, venueBandId, thisVenueId);
+        Venue foundVenue = new Venue(venueName, thisVenueId);
         allVenues.Add(foundVenue);
       }
       if (rdr != null)

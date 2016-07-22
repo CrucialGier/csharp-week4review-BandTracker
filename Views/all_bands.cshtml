@@ -1,0 +1,10 @@
+<h2>Band Tracker<h2>
+<h3>All Registered Bands</h3>
+<ul>
+@foreach (var currentBand in @Model)
+{
+  <li><a href="/@currentBand.GetName()">@currentBand.GetName()</a></li>
+}
+</ul>
+
+<a href="/">Browse All Venues</a>
