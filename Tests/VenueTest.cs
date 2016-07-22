@@ -78,6 +78,22 @@ namespace BandTracker
       Assert.Equal(testList, result);
     }
 
+    [Fact]
+    public void Test_Update_UpdatesVenueWithNewValues()
+    {
+      Venue testVenue = new Venue("Shatter Dome", 1);
+      testVenue.Save();
+
+      testVenue.SetName("Belly of the Beast");
+      testVenue.SetBandId(2);
+      testVenue.Update();
+
+      Venue resultVenue = Venue.Find(testVenue.GetId());
+      Venue test = new Venue("Belly of the Beast", 2, testVenue.GetId());
+
+      Assert.Equal(test, resultVenue);
+    }
+
     public void Dispose()
     {
       Band.DeleteAll();
