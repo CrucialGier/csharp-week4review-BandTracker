@@ -94,6 +94,22 @@ namespace BandTracker
       Assert.Equal(test, resultVenue);
     }
 
+    [Fact]
+    public void Test_Delete_DeletesVenueFromDatabase()
+    {
+      Venue testVenue1 = new Venue("Shatter Dome", 1);
+      testVenue1.Save();
+      Venue testVenue2 = new Venue("Belly of the Beast", 2);
+      testVenue2.Save();
+
+      Venue.Delete(testVenue1.GetId());
+
+      List<Venue> testList = new List<Venue>{testVenue2};
+      List<Venue> resultList = Venue.GetAll();
+
+      Assert.Equal(testList, resultList);
+    }
+
     public void Dispose()
     {
       Band.DeleteAll();
