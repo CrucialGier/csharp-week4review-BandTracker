@@ -51,7 +51,17 @@ namespace BandTracker
         currentVenue.AddBand(newBand);
         return View["venue_bands.cshtml", currentVenue];
       };
-      
+      Get["/band/{id}"] =parameters=> {
+        Band currentBand = Band.Find(parameters.id);
+        return View["band_venues.cshtml", currentBand];
+      };
+      Post["/band/{id}/add-venue"] =parameters=> {
+        Venue newVenue = new Venue(Request.Form["newVenue"]);
+        newVenue.Save();
+        Band currentBand = Band.Find(parameters.id);
+        currentBand.AddVenue(newVenue);
+        return View["band_venues.cshtml", currentBand];
+      };
     }
   }
 }
