@@ -12,7 +12,6 @@ namespace BandTracker
     {
       DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=band_tracker_test;Integrated Security=SSPI;";
     }
-
     [Fact]
     public void Test_DatabaseEmptyAtFirst()
     {
@@ -20,6 +19,7 @@ namespace BandTracker
 
       Assert.Equal(0, result);
     }
+
     [Fact]
     public void Test_Save_SavesToDatabase()
     {
@@ -32,5 +32,10 @@ namespace BandTracker
       Assert.Equal(testList, result);
     }
 
+    public void Dispose()
+    {
+      Band.DeleteAll();
+      Venue.DeleteAll();
+    }
   }
 }

@@ -1,7 +1,7 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Registrar
+namespace BandTracker
 {
   public class DB
   {
